@@ -25,10 +25,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Spinner spinner1, spinner2;
     private Button buttonAdd, buttonCall, buttonDel;
+    private EditText editTextPhone, editTextPine, editTextNotes;
     final Context context = this;
     private String newConfName;
 
-    ConfData conf = new ConfData();
+    ConfData conf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +38,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        conf = new ConfData(this);
+        conf.ReadFile();
         addItemsOnSpinner();
+        addListenerOnSpinnerItemSelection();
 
+        editTextPhone = (EditText) findViewById(R.id.editPhoneNum);
+        editTextPine = (EditText) findViewById(R.id.editConfPin);
+        editTextNotes = (EditText) findViewById(R.id.editNotes);
 
         FloatingActionButton fabCall = (FloatingActionButton) findViewById(R.id.call);
         fabCall.setOnClickListener(new View.OnClickListener() {
@@ -113,9 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
         spinner2 = (Spinner) findViewById(R.id.spinnerDescription);
         List<String> list = new ArrayList<String>();
-        list.add("list 1");
-        list.add("list 2");
-        list.add("list 3");
+        list = conf.getConfName();
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -127,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
+
+                System.out.println("addListenerOnSpinnerItemSelection onItemSelected get called");
 
                 updateContent(position);
             }
@@ -142,14 +149,23 @@ public class MainActivity extends AppCompatActivity {
     private void updateContent(int pos)
     {
 
+        String retriveConf = conf.retriveSelectedConf(pos);
+
+        System.out.println("pos: "+ pos+ "info:" + retriveConf);
 
     }
 
     void addNewConfInfo(String confName)
     {
-        // String data = confName + ":";
 
-        conf.addInfo(confName, "","","");
+
+        System.out.println("phone: "+ editTextPhone.getText().toString());
+        System.out.println("pin: "+ editTextPine.getText().toString());
+        System.out.println("note: "+ editTextNotes.getText().toString());
+
+        conf.addInfo(confName, editTextPhone.getText().toString(), editTextPine.getText().toString(), editTextNotes.getText().toString());
+        conf.ReadFile();
+        addItemsOnSpinner();
     }
 
     @Override

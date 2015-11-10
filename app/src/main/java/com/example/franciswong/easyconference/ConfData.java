@@ -4,6 +4,9 @@ package com.example.franciswong.easyconference;
  * Created by gfh346 on 11/9/2015.
  */
 
+import android.content.Context;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
@@ -16,12 +19,15 @@ public class ConfData implements Serializable {
 
     //private String confInfo;
     private ArrayList<String> confInfo;
+    Context m_Context;
 
-    void ConfData( )
+    public ConfData(Context context)
     {
+        m_Context = context;
         confInfo = new ArrayList<String>();
         confInfo.add("Add New:::");
-        WriteFile();
+ //       WriteFile();
+        ReadFile();
 
     }
 
@@ -39,7 +45,10 @@ public class ConfData implements Serializable {
         // add-write text into file
         try {
 
-            ObjectOutputStream fileOut = new ObjectOutputStream(new FileOutputStream("file.srl"));
+            System.out.println("WriteFile: "+ confInfo.toString());
+
+            ObjectOutputStream fileOut;
+            fileOut = new ObjectOutputStream(new FileOutputStream(m_Context.getFilesDir()+"file.srl"));
             fileOut.writeObject(confInfo);
             fileOut.close();
 
@@ -53,14 +62,40 @@ public class ConfData implements Serializable {
 
         //reading text from file
         try {
-            ObjectInputStream fileIn = new ObjectInputStream(new FileInputStream("file.srl"));
+
+            ObjectInputStream fileIn = new ObjectInputStream(new FileInputStream(m_Context.getFilesDir()+"file.srl"));
             confInfo = (ArrayList) fileIn.readObject();
             fileIn.close();
+            System.out.println("ReadFile: " + confInfo.toString());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public ArrayList<String> getConfName()
+    {
+
+        ArrayList<String> confNameList = new ArrayList<String>();
+
+        System.out.println(confInfo.toString());
+
+        for (String tmpString :confInfo )
+        {
+            confNameList.add(tmpString.substring(0,tmpString.indexOf(":") ));
+        }
+
+        System.out.println(confNameList.toString());
+
+        return confNameList;
+    }
+
+    public String retriveSelectedConf(int pos)
+    {
+        if (pos < confInfo.size())
+            return confInfo.get(pos);
+        else
+            return "";
+    }
 
 }
