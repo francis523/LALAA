@@ -9,28 +9,30 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 
-    <TextView android:text="Conference Name" android:layout_width="wrap_content"
+    <TextView android:text="Select Conference" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:id="@+id/textView"
+        android:textSize="26dp"
+        android:textStyle="bold" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="phone"
+        android:inputType="text|phone|textPhonetic"
         android:ems="10"
         android:id="@+id/editPhoneNum"
-        android:layout_marginTop="29dp"
-        android:layout_below="@+id/spinnerDescription"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:phoneNumber="true"
+        android:singleLine="true"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_toRightOf="@+id/textView3"
+        android:layout_toEndOf="@+id/textView3" />
 
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinnerDescription"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:spinnerMode="dropdown"
+        android:layout_below="@+id/textView" />
 
 
     <EditText
@@ -39,19 +41,72 @@
         android:inputType="numberPassword"
         android:ems="10"
         android:id="@+id/editConfPin"
-        android:layout_marginTop="33dp"
-        android:layout_below="@+id/editPhoneNum"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:password="false"
+        android:singleLine="true"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_toEndOf="@+id/textView"
+        android:layout_toRightOf="@+id/textView" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editNotes"
-        android:layout_below="@+id/editConfPin"
+        android:layout_below="@+id/textView4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="55dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="96dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Phone  Num"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/spinnerDescription"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="33dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Conference Num"
+        android:id="@+id/textView3"
+        android:layout_marginTop="38dp"
+        android:layout_below="@+id/editPhoneNum"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Notes"
+        android:id="@+id/textView4"
+        android:layout_marginTop="51dp"
+        android:layout_below="@+id/checkBoxDelaySend"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delay 3 Seconds to send PIN"
+        android:id="@+id/checkBoxDelaySend"
+        android:checked="false"
+        android:layout_below="@+id/textView3"
+        android:layout_toRightOf="@+id/textView4"
+        android:layout_toEndOf="@+id/textView4" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add # after PIN"
+        android:id="@+id/checkBoxAddPound"
+        android:checked="false"
+        android:layout_below="@+id/checkBoxDelaySend"
+        android:layout_alignLeft="@+id/checkBoxDelaySend"
+        android:layout_alignStart="@+id/checkBoxDelaySend" />
 </RelativeLayout>

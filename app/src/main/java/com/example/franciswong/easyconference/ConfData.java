@@ -20,10 +20,12 @@ public class ConfData implements Serializable {
     //private String confInfo;
     private ArrayList<String> confInfo;
     Context m_Context;
+    String m_Regex;
 
-    public ConfData(Context context)
+    public ConfData(Context context, String Regex)
     {
         m_Context = context;
+        m_Regex =  Regex;
         confInfo = new ArrayList<String>();
         confInfo.add("Add New:::");
  //       WriteFile();
@@ -33,7 +35,14 @@ public class ConfData implements Serializable {
 
     Boolean addInfo(String confName, String phoneNum, String pin, String notes)
     {
-        confInfo.add(0, confName+":"+phoneNum + ":" + pin+ ":"+notes);
+
+        if (confName.length()== 0)
+        {
+            System.out.println("ERROR!!! confName can't be empty");
+            return false;
+        }
+
+        confInfo.add(confName+m_Regex+phoneNum + m_Regex + pin+ m_Regex+notes);
         WriteFile();
         return true;
     }
@@ -96,6 +105,13 @@ public class ConfData implements Serializable {
             return confInfo.get(pos);
         else
             return "";
+    }
+
+    public Boolean deleteConf(int pos)
+    {
+        confInfo.remove(pos);
+        WriteFile();
+        return true;
     }
 
 }
